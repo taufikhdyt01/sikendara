@@ -11,7 +11,7 @@ class Vehicle extends Model
     use HasFactory;
 
     protected $fillable = [
-        'type', 'number_plate', 'brand', 'model', 'year', 'capacity', 'owned_by', 'status',
+        'type', 'number_plate', 'brand', 'model', 'owned_by', 'status',
     ];
 
     protected $casts = [

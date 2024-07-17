@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('fuel_consumptions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('vehicle_id')->constrained('vehicles');
+            $table->string('fuel_type');
             $table->date('date');
             $table->float('liters');
             $table->timestamps();

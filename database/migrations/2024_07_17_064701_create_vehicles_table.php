@@ -17,8 +17,6 @@ return new class extends Migration
             $table->string('number_plate');
             $table->string('brand');
             $table->string('model');
-            $table->integer('year');
-            $table->integer('capacity');
             $table->enum('owned_by', ['company', 'rental']);
             $table->enum('status', ['available', 'in use', 'maintenance']);
             $table->timestamps();

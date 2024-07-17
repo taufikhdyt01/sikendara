@@ -11,7 +11,7 @@ class ServiceSchedule extends Model
     use HasFactory;
 
     protected $fillable = [
-        'vehicle_id', 'last_service_date', 'next_service_date',
+        'vehicle_id', 'service_date',
     ];
 
     public function vehicle(): BelongsTo

@@ -11,7 +11,7 @@ class FuelConsumption extends Model
     use HasFactory;
 
     protected $fillable = [
-        'vehicle_id', 'date', 'liters',
+        'vehicle_id', 'fuel_type', 'date', 'liters',
     ];
 
     public function vehicle(): BelongsTo
