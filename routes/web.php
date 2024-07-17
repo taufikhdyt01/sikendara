@@ -1,27 +1,22 @@
 <?php
 
+use App\Http\Controllers\DriverController;
+use App\Http\Controllers\FuelConsumptionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\VechicleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
+Route::resource('drivers', DriverController::class);
+Route::resource('vehicles', VechicleController::class);
+Route::resource('fuel-consumptions', FuelConsumptionController::class);
+
 Route::get('/bookings', function () {
     return view('pages.bookings.index');
 })->name('booking.index');
-
-Route::get('/vehicles', function () {
-    return view('pages.vehicles.index');
-})->name('vehicles.index');
-
-Route::get('/drivers', function () {
-    return view('pages.drivers.index');
-})->name('drivers.index');
-
-Route::get('/fuel-consumptions', function () {
-    return view('pages.fuel-consumptions.index');
-})->name('fuel-consumptions.index');
 
 Route::get('/services', function () {
     return view('pages.services.index');

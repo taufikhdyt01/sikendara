@@ -11,7 +11,7 @@
                         <form class="sm:pr-3" action="#" method="GET">
                             <label for="vehicles-search" class="sr-only">Cari</label>
                             <div class="relative w-48 mt-1 sm:w-64 xl:w-96">
-                                <input type="text" name="vehicles" id="vehicles-search"
+                                <input type="text" name="search" id="vehicles-search"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                     placeholder="Cari Kendaraan">
                             </div>
@@ -55,37 +55,50 @@
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:bg-gray-800 dark:divide-gray-700">
-                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        1.
-                                    </td>
-                                    <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
-                                        <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                            <div class="text-base font-semibold text-gray-900 dark:text-white">
-                                                Toyota Avanza
-                                            </div>
+                                @forelse ($fuelConsumptions as $fuelConsumption)
+                                    <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <td
+                                            class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ $loop->iteration }}.
+                                        </td>
+                                        <td class="flex items-center p-4 mr-12 space-x-6 whitespace-nowrap">
                                             <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                                                Z X621 SH</div>
-                                        </div>
-                                    </td>
+                                                <div class="text-base font-semibold text-gray-900 dark:text-white">
+                                                    {{ $fuelConsumption->vehicle->brand }}
+                                                    {{ $fuelConsumption->vehicle->model }}
+                                                </div>
+                                                <div class="text-sm font-normal text-gray-500 dark:text-gray-400">
+                                                    {{ $fuelConsumption->vehicle->number_plate }}</div>
+                                            </div>
+                                        </td>
 
-                                    <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        Pertalite
-                                    </td>
-                                    <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        12 Juli 2024
-                                    </td>
-                                    <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        50
-                                    </td>
-                                </tr>
-
+                                        <td
+                                            class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ $fuelConsumption->fuel_type }}
+                                        </td>
+                                        <td
+                                            class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ date('d F Y', strtotime($fuelConsumption->date)) }}
+                                        </td>
+                                        <td
+                                            class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                            {{ $fuelConsumption->liters }} L
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6"
+                                            class="p-4 text-base font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
+                                            Tidak ada data laporan Konsumsi BBM.
+                                        </td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-        @include('pages.fuel-consumptions.create-modal')
+        @include('pages.fuel-consumptions.partials.create-modal')
     @endsection
 </x-app-layout>
