@@ -7,6 +7,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/bookings', function () {
+    return view('pages.bookings.index');
+})->name('booking.index');
+
+Route::get('/vehicles', function () {
+    return view('pages.vehicles.index');
+})->name('vehicles.index');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
