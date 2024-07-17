@@ -15,6 +15,18 @@ Route::get('/vehicles', function () {
     return view('pages.vehicles.index');
 })->name('vehicles.index');
 
+Route::get('/drivers', function () {
+    return view('pages.drivers.index');
+})->name('drivers.index');
+
+Route::get('/fuel-consumptions', function () {
+    return view('pages.fuel-consumptions.index');
+})->name('fuel-consumptions.index');
+
+Route::get('/services', function () {
+    return view('pages.services.index');
+})->name('services.index');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

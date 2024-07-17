@@ -18,6 +18,7 @@
                         </x-sidebar.item>
                     </li>
 
+                    {{-- manajemen kendaraan --}}
                     <li>
                         <x-sidebar.item path="{{ route('vehicles.index') }}" content="Manajemen Kendaraan">
                             <x-s-v-g-s.vehicles
@@ -25,9 +26,34 @@
                         </x-sidebar.item>
                     </li>
 
+                    {{-- manajemen driver --}}
+                    <li>
+                        <x-sidebar.item path="{{ route('drivers.index') }}" content="Manajemen Driver">
+                            <x-s-v-g-s.driver
+                                class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
+                        </x-sidebar.item>
+                    </li>
+
+                    {{-- Pemesanan Kendaraan --}}
                     <li>
                         <x-sidebar.item path="{{ route('booking.index') }}" content="Pemesanan Kendaraan">
                             <x-s-v-g-s.bookings
+                                class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
+                        </x-sidebar.item>
+                    </li>
+
+                    {{-- Laporan Konsumsi BBM --}}
+                    <li>
+                        <x-sidebar.item path="{{ route('fuel-consumptions.index') }}" content="Laporan Konsumsi BBM">
+                            <x-s-v-g-s.fuel-2
+                                class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
+                        </x-sidebar.item>
+                    </li>
+
+                    {{-- Laporan Service --}}
+                    <li>
+                        <x-sidebar.item path="{{ route('services.index') }}" content="Laporan Service">
+                            <x-s-v-g-s.services-2
                                 class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
                         </x-sidebar.item>
                     </li>
