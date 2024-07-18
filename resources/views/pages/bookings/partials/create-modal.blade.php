@@ -18,7 +18,7 @@
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <form action="#" method="POST">
+            <form action="{{ route('bookings.store') }}" method="POST">
                 @csrf
                 <div class="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
                     <div class="grid grid-cols-6 gap-6">
@@ -28,7 +28,13 @@
                             <select name="vehicle" id="vehicle" required
                                 class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                 <option value="">Pilih Kendaraan</option>
-                                <!-- Options kendaraan di sini -->
+                                @foreach ($vehicles as $vehicle)
+                                    @if ($vehicle->status === 'available')
+                                        <option value="{{ $vehicle->id }}">{{ $vehicle->brand }} {{ $vehicle->model }}
+                                            ({{ $vehicle->number_plate }})
+                                        </option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-span-6 sm:col-span-3">
@@ -37,17 +43,24 @@
                             <select name="driver" id="driver" required
                                 class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                 <option value="">Pilih Driver</option>
-                                <!-- Options driver di sini -->
+                                @foreach ($drivers as $driver)
+                                    @if ($driver->status === 'available')
+                                        <option value="{{ $driver->id }}">{{ $driver->name }}</option>
+                                    @endif
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-span-6 sm:col-span-3">
                             <label for="location"
-                                class="block text-sm font-medium text-gray-700 dark:text-gray-300">Lokasi
+                                class="block text-sWm font-medium text-gray-700 dark:text-gray-300">Lokasi
                                 Tambang</label>
-                            <select name="location" id="location" required
+                            <select name="mine" id="location" required
                                 class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                 <option value="">Pilih Lokasi Tambang</option>
-                                <!-- Options lokasi tambang di sini -->
+                                @foreach ($mines as $mine)
+                                    <option value="{{ $mine->id }}">{{ $mine->name }} - {{ $mine->region }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-span-6 sm:col-span-3">
@@ -69,21 +82,17 @@
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">Pengajuan
                                 Persetujuan</label>
                             <div class="mt-2 space-y-2">
-                                <div class="flex items-start">
-                                    <input id="approver1" name="approvers[]" type="checkbox" value="Approver1"
-                                        class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 dark:bg-gray-600 dark:border-gray-500">
-                                    <label for="approver1"
-                                        class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Approver
-                                        1</label>
-                                </div>
-                                <div class="flex items-start">
-                                    <input id="approver2" name="approvers[]" type="checkbox" value="Approver2"
-                                        class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 dark:bg-gray-600 dark:border-gray-500">
-                                    <label for="approver2"
-                                        class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">Approver
-                                        2</label>
-                                </div>
-                                <!-- Tambahkan lebih banyak checkbox jika diperlukan -->
+                                @foreach ($approvers as $approver)
+                                    <div class="flex items-start">
+                                        <input id="approver{{ $loop->iteration }}" name="approvers[]" type="checkbox"
+                                            value="{{ $approver->id }}"
+                                            class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 dark:bg-gray-600 dark:border-gray-500">
+                                        <label for="approver{{ $loop->iteration }}"
+                                            class="ml-2 text-sm font-medium text-gray-700 dark:text-gray-300">{{ $approver->name }}
+                                            ({{ $approver->position }} {{ $approver->office->name }})
+                                        </label>
+                                    </div>
+                                @endforeach
                             </div>
                         </div>
                     </div>

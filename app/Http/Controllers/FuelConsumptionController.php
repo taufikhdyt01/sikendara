@@ -13,24 +13,24 @@ class FuelConsumptionController extends Controller
      * Display a listing of the resource.
      */
     public function index(Request $request)
-{
-    $search = $request->input('search');
+    {
+        $search = $request->input('search');
 
-    if ($search) {
-        $fuelConsumptions = FuelConsumption::whereHas('vehicle', function ($query) use ($search) {
-            $query
-                ->where('brand', 'like', '%' . $search . '%')
-                ->orWhere('model', 'like', '%' . $search . '%')
-                ->orWhereRaw("CONCAT(brand, ' ', model) LIKE ?", ['%' . $search . '%']);
-        })->get();
-    } else {
-        $fuelConsumptions = FuelConsumption::with('vehicle')->get();
+        if ($search) {
+            $fuelConsumptions = FuelConsumption::whereHas('vehicle', function ($query) use ($search) {
+                $query
+                    ->where('brand', 'like', '%' . $search . '%')
+                    ->orWhere('model', 'like', '%' . $search . '%')
+                    ->orWhereRaw("CONCAT(brand, ' ', model) LIKE ?", ['%' . $search . '%']);
+            })->get();
+        } else {
+            $fuelConsumptions = FuelConsumption::with('vehicle')->get();
+        }
+
+        $vehicles = Vehicle::all();
+
+        return view('pages.fuel-consumptions.index', compact('fuelConsumptions', 'vehicles'));
     }
-
-    $vehicles = Vehicle::all();
-
-    return view('pages.fuel-consumptions.index', compact('fuelConsumptions', 'vehicles'));
-}
 
     /**
      * Show the form for creating a new resource.

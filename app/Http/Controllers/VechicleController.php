@@ -36,6 +36,7 @@ class VechicleController extends Controller
         foreach ($vehicles as $vehicle) {
             $lastService = $vehicle->services()->orderBy('service_date', 'desc')->first();
             $vehicle->nextServiceDate = $lastService ? Carbon::parse($lastService->service_date)->addMonth()->format('Y-m-d') : null;
+            $vehicle->approvedBookings = $vehicle->bookings()->where('status', 'approved')->get();
         }
 
         return view('pages.vehicles.index', compact('vehicles'));

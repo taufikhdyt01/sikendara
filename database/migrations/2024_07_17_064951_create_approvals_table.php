@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('booking_id')->constrained();
             $table->foreignId('user_id')->constrained();
-            $table->enum('status', ['pending', 'approved', 'rejected']);
+            $table->unsignedInteger('level');
+            $table->enum('status', ['pending', 'process', 'approved', 'rejected']);
             $table->timestamps();
         });
     }

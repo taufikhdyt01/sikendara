@@ -60,4 +60,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Log::class);
     }
+
+    public function canApprove($booking)
+    {
+        $approval = $this->approvals()->where('booking_id', $booking->id)->first();
+
+        if ($approval && $approval->status === 'process') {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->id();
             $table->foreignId('driver_id')->constrained();
-            $table->foreignId('vehicles_id')->constrained('vehicles');
-            $table->foreignId('mines_id')->constrained('mines');
+            $table->foreignId('vehicle_id')->constrained();
+            $table->foreignId('mine_id')->constrained();
             $table->date('start_date');
             $table->date('end_date');
             $table->enum('status', ['pending', 'approved', 'rejected']);

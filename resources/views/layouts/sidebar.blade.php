@@ -36,7 +36,7 @@
 
                     {{-- Pemesanan Kendaraan --}}
                     <li>
-                        <x-sidebar.item path="{{ route('booking.index') }}" content="Pemesanan Kendaraan">
+                        <x-sidebar.item path="{{ route('bookings.index') }}" content="Pemesanan Kendaraan">
                             <x-s-v-g-s.bookings
                                 class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
                         </x-sidebar.item>

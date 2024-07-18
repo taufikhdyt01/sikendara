@@ -11,7 +11,7 @@ class Approval extends Model
     use HasFactory;
 
     protected $fillable = [
-        'booking_id', 'user_id', 'status',
+        'booking_id', 'user_id', 'level', 'status',
     ];
 
     protected $casts = [

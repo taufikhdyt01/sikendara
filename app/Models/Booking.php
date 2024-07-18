@@ -12,7 +12,7 @@ class Booking extends Model
     use HasFactory;
 
     protected $fillable = [
-        'driver_id', 'vehicles_id', 'mines_id', 'start_date', 'end_date', 'status',
+        'driver_id', 'vehicle_id', 'mine_id', 'start_date', 'end_date', 'status',
     ];
 
     protected $casts = [
@@ -26,12 +26,12 @@ class Booking extends Model
 
     public function vehicle(): BelongsTo
     {
-        return $this->belongsTo(Vehicle::class, 'vehicles_id');
+        return $this->belongsTo(Vehicle::class);
     }
 
     public function mine(): BelongsTo
     {
-        return $this->belongsTo(Mine::class, 'mines_id');
+        return $this->belongsTo(Mine::class);
     }
 
     public function approvals(): HasMany
