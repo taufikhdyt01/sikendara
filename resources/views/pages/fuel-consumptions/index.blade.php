@@ -17,11 +17,13 @@
                             </div>
                         </form>
                     </div>
-                    <button type="button" data-modal-target="add-fuel-modal" data-modal-toggle="add-fuel-modal"
-                        class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                        <x-s-v-g-s.plus></x-s-v-g-s.plus>
-                        Buat Laporan Konsumsi BBM
-                    </button>
+                    @if (auth()->user()->role === 'admin')
+                        <button type="button" data-modal-target="add-fuel-modal" data-modal-toggle="add-fuel-modal"
+                            class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            <x-s-v-g-s.plus></x-s-v-g-s.plus>
+                            Buat Laporan Konsumsi BBM
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>

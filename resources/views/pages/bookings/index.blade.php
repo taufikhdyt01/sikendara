@@ -19,12 +19,14 @@
                         </form>
                     </div>
                     <div class="flex items-center ml-auto space-x-2 sm:space-x-3">
+                        @if (auth()->user()->role === 'admin')
                         <button type="button" data-modal-target="create-reservation-modal"
                             data-modal-toggle="create-reservation-modal"
                             class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                             <x-s-v-g-s.plus></x-s-v-g-s.plus>
                             Buat Pemesanan
                         </button>
+                        @endif
                         <button type="button" data-modal-target="export-modal" data-modal-toggle="export-modal"
                             class="inline-flex items-center justify-center w-1/2 px-3 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 sm:w-auto dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700">
                             <x-s-v-g-s.export></x-s-v-g-s.export>
