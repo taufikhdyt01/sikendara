@@ -83,3 +83,7 @@ Lists reports of fuel consumption for all vehicles.
 Lists service reports for all vehicles.
 
 -   **Admin Role**: Can add service reports.
+
+## Activity Diagram
+
+![activity_diagram](https://github.com/taufikhdyt01/sikendara/blob/main/public/activity_diagram.png?raw=true)
