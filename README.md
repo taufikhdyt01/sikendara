@@ -36,9 +36,50 @@ The following steps will guide you through the installation process for running 
 
 The following user accounts are available for testing:
 
-| Name          | Email                  | Password | Role     | Position            | Office          |
-| ------------- | ---------------------- | -------- | -------- | ------------------- | --------------- |
-| Budi Santoso  | admin@nickelmining.com | password | Admin    | Pengelola Kendaraan | Head Office     |
-| Agus Setiawan | agus@nickelmining.com  | password | Approver | Manajer             | Branch Office 1 |
-| Dewi Sartika  | dewi@nickelmining.com  | password | Approver | Kepala Operasi      | Branch Office 1 |
-| Siti Aisyah   | siti@nickelmining.com  | password | Approver | Manajer             | Head Office     |
+| Name          | Email                  | Password | Role     | Position            | Office                         |
+| ------------- | ---------------------- | -------- | -------- | ------------------- | ------------------------------ |
+| Budi Santoso  | admin@nickelmining.com | password | Admin    | Pengelola Kendaraan | Kantor Pusat PT Nickel Mining  |
+| Agus Setiawan | agus@nickelmining.com  | password | Approver | Manajer             | Kantor Cabang PT Nickel Mining |
+| Dewi Sartika  | dewi@nickelmining.com  | password | Approver | Kepala Operasi      | Kantor Cabang PT Nickel Mining |
+| Siti Aisyah   | siti@nickelmining.com  | password | Approver | Manajer             | Kantor Pusat PT Nickel Mining  |
+
+## User Guide
+
+### Login
+
+You can log in as either an admin or an approver. Upon logging in, several menu pages will be available:
+
+### 1. Dashboard
+
+Displays graphs of vehicle usage per month and total overall usage.
+
+### 2. Vehicle Management
+
+Lists and details vehicles, allowing monitoring of fuel consumption, service schedules, and usage history.
+
+-   **Admin Role**: Can add new vehicles.
+
+### 3. Driver Management
+
+Lists drivers and their statuses.
+
+-   **Admin Role**: Can add new drivers.
+
+### 4. Vehicle Booking
+
+Lists and details vehicle booking requests, with the ability to export them to Excel periodically per month.
+
+-   **Admin Role**: Can create bookings by selecting vehicles, drivers, mining locations, usage dates, and approving authorities.
+-   **Approver Role**: Can approve or reject vehicle booking requests that they receive, based on their approval level.
+
+### 5. Fuel Consumption Reports
+
+Lists reports of fuel consumption for all vehicles.
+
+-   **Admin Role**: Can add fuel consumption reports.
+
+### 6. Service Reports
+
+Lists service reports for all vehicles.
+
+-   **Admin Role**: Can add service reports.
