@@ -13,7 +13,7 @@
 
                     {{-- dashboard --}}
                     <li>
-                        <x-sidebar.item class="items-start">
+                        <x-sidebar.item path="{{ route('dashboard') }}" class="items-start">
                             <x-s-v-g-s.dashboard class="w-6 h-6" />
                         </x-sidebar.item>
                     </li>
