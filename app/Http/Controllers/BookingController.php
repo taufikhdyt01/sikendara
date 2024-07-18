@@ -43,13 +43,6 @@ class BookingController extends Controller
 
         return view('pages.bookings.index', compact('bookings', 'vehicles', 'drivers', 'mines', 'approvers'));
     }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -81,38 +74,6 @@ class BookingController extends Controller
         });
 
         return redirect()->route('bookings.index')->with('success', 'Booking berhasil disimpan.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 
     public function approve(Request $request, Booking $booking)
@@ -164,56 +125,56 @@ class BookingController extends Controller
     }
 
     public function export(Request $request)
-{
-    // Ambil data berdasarkan bulan dan tahun
-    $bookings = Booking::whereMonth('created_at', $request->input('export-month'))
-                       ->whereYear('created_at', $request->input('export-year'))
-                       ->get();
+    {
+        // Ambil data berdasarkan bulan dan tahun
+        $bookings = Booking::whereMonth('created_at', $request->input('export-month'))->whereYear('created_at', $request->input('export-year'))->get();
 
-    // Buat spreadsheet baru
-    $spreadsheet = new Spreadsheet();
-    $sheet = $spreadsheet->getActiveSheet();
+        // Buat spreadsheet baru
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
 
-    // Set header kolom
-    $sheet->setCellValue('A1', 'No');
-    $sheet->setCellValue('B1', 'Brand');
-    $sheet->setCellValue('C1', 'Model');
-    $sheet->setCellValue('D1', 'Number Plate');
-    $sheet->setCellValue('E1', 'Type');
-    $sheet->setCellValue('F1', 'Owned By');
-    $sheet->setCellValue('G1', 'Driver');
-    $sheet->setCellValue('H1', 'Mine');
-    $sheet->setCellValue('I1', 'Region');
-    $sheet->setCellValue('J1', 'Start Date');
-    $sheet->setCellValue('K1', 'End Date');
-    $sheet->setCellValue('L1', 'Status');
-    $sheet->setCellValue('M1', 'Created At');
+        // Set header kolom
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'Brand');
+        $sheet->setCellValue('C1', 'Model');
+        $sheet->setCellValue('D1', 'Number Plate');
+        $sheet->setCellValue('E1', 'Type');
+        $sheet->setCellValue('F1', 'Owned By');
+        $sheet->setCellValue('G1', 'Driver');
+        $sheet->setCellValue('H1', 'Mine');
+        $sheet->setCellValue('I1', 'Region');
+        $sheet->setCellValue('J1', 'Start Date');
+        $sheet->setCellValue('K1', 'End Date');
+        $sheet->setCellValue('L1', 'Status');
+        $sheet->setCellValue('M1', 'Created At');
 
-    // Isi data
-    $row = 2;
-    foreach ($bookings as $booking) {
-        $sheet->setCellValue('A' . $row, $booking->id);
-        $sheet->setCellValue('B' . $row, $booking->vehicle->brand);
-        $sheet->setCellValue('C' . $row, $booking->vehicle->model);
-        $sheet->setCellValue('D' . $row, $booking->vehicle->number_plate);
-        $sheet->setCellValue('E' . $row, $booking->vehicle->type);
-        $sheet->setCellValue('F' . $row, $booking->vehicle->owned_by);
-        $sheet->setCellValue('G' . $row, $booking->driver->name);
-        $sheet->setCellValue('H' . $row, $booking->mine->name);
-        $sheet->setCellValue('I' . $row, $booking->mine->region);
-        $sheet->setCellValue('J' . $row, $booking->start_date);
-        $sheet->setCellValue('K' . $row, $booking->end_date);
-        $sheet->setCellValue('L' . $row, $booking->status);
-        $sheet->setCellValue('M' . $row, $booking->created_at->format('Y-m-d H:i:s'));
-        $row++;
+        // Isi data
+        $row = 2;
+        foreach ($bookings as $booking) {
+            $sheet->setCellValue('A' . $row, $booking->id);
+            $sheet->setCellValue('B' . $row, $booking->vehicle->brand);
+            $sheet->setCellValue('C' . $row, $booking->vehicle->model);
+            $sheet->setCellValue('D' . $row, $booking->vehicle->number_plate);
+            $sheet->setCellValue('E' . $row, $booking->vehicle->type);
+            $sheet->setCellValue('F' . $row, $booking->vehicle->owned_by);
+            $sheet->setCellValue('G' . $row, $booking->driver->name);
+            $sheet->setCellValue('H' . $row, $booking->mine->name);
+            $sheet->setCellValue('I' . $row, $booking->mine->region);
+            $sheet->setCellValue('J' . $row, $booking->start_date);
+            $sheet->setCellValue('K' . $row, $booking->end_date);
+            $sheet->setCellValue('L' . $row, $booking->status);
+            $sheet->setCellValue('M' . $row, $booking->created_at->format('Y-m-d H:i:s'));
+            $row++;
+        }
+
+        // Konfigurasi response untuk download
+        $filename = 'bookings_export_' . now()->format('YmdHis') . '.xlsx';
+
+        $writer = new Xlsx($spreadsheet);
+        $writer->save(storage_path('exports/' . $filename));
+
+        return response()
+            ->download(storage_path('exports/' . $filename))
+            ->deleteFileAfterSend();
     }
-
-    // Konfigurasi response untuk download
-    $filename = 'bookings_export_' . now()->format('YmdHis') . '.xlsx';
-
-    $writer = new Xlsx($spreadsheet);
-    $writer->save(storage_path('exports/' . $filename));
-
-    return response()->download(storage_path('exports/' . $filename))->deleteFileAfterSend();
-}
 }
