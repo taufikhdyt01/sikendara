@@ -7,7 +7,7 @@ use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
-class VechicleController extends Controller
+class VehicleController extends Controller
 {
     /**
      * Display a listing of the resource.
