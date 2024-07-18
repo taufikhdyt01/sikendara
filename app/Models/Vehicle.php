@@ -30,8 +30,8 @@ class Vehicle extends Model
         return $this->hasMany(FuelConsumption::class);
     }
 
-    public function serviceSchedules(): HasMany
+    public function services(): HasMany
     {
-        return $this->hasMany(ServiceSchedule::class);
+        return $this->hasMany(Service::class);
     }
 }

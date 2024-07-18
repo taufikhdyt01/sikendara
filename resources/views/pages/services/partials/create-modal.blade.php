@@ -9,33 +9,32 @@
                 <button type="button"
                     class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
                     data-modal-hide="add-service-modal">
-                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                            clip-rule="evenodd"></path>
-                    </svg>
+                    <x-s-v-g-s.close-2></x-s-v-g-s.close-2>
                     <span class="sr-only">Close modal</span>
                 </button>
             </div>
-            <form action="#" method="POST">
+            <form action="{{ route('services.store') }}" method="POST">
                 @csrf
                 <div class="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
                     <div class="grid grid-cols-6 gap-6">
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="vehicle"
+                            <label for="vehicle_id"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">Kendaraan</label>
-                            <select name="vehicle" id="vehicle" required
+                            <select name="vehicle_id" id="vehicle_id" required
                                 class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                                 <option value="">Pilih Kendaraan</option>
-                                <!-- Options kendaraan di sini -->
+                                @foreach ($vehicles as $vehicle)
+                                    <option value="{{ $vehicle->id }}">{{ $vehicle->brand }} {{ $vehicle->model }}
+                                        ({{ $vehicle->number_plate }})
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-span-6 sm:col-span-3">
-                            <label for="service-date"
+                            <label for="service_date"
                                 class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tanggal
                                 Perbaikan</label>
-                            <input type="date" name="service-date" id="service-date" required
+                            <input type="date" name="service_date" id="service_date" required
                                 class="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:ring-primary-500 focus:border-primary-500 sm:text-sm dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
                         </div>
                         <div class="col-span-6">

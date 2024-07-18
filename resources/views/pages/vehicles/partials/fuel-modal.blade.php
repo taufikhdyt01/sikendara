@@ -15,7 +15,7 @@
             </div>
             <div class="p-4">
                 <ul class="divide-y divide-gray-200">
-                    @foreach ($vehicle->fuelConsumptions as $fuelConsumption)
+                    @forelse ($vehicle->fuelConsumptions as $fuelConsumption)
                         <li class="py-2 flex">
                             <span class="mr-4 text-gray-500 dark:text-gray-400">{{ $loop->iteration }}.</span>
                             <div class="flex-grow">
@@ -28,7 +28,17 @@
                                 <p class="text-lg font-semibold text-blue-600">{{ $fuelConsumption->liters }} L</p>
                             </div>
                         </li>
-                    @endforeach
+                    @empty
+                        <li class="py-2">
+                            <div class="flex justify-between">
+                                <div class="flex-grow">
+                                    <h4 class="text-lg font-medium text-gray-900 dark:text-white">Belum ada laporan
+                                        Konsumsi BBM
+                                    </h4>
+                                </div>
+                            </div>
+                        </li>
+                    @endforelse
                 </ul>
             </div>
         </div>

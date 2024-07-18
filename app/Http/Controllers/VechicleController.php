@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\VehicleRequest;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 
 class VechicleController extends Controller
 {
@@ -30,7 +31,12 @@ class VechicleController extends Controller
                             ->get();
         } else {
             $vehicles = Vehicle::all();
-        }    
+        }
+        
+        foreach ($vehicles as $vehicle) {
+            $lastService = $vehicle->services()->orderBy('service_date', 'desc')->first();
+            $vehicle->nextServiceDate = $lastService ? Carbon::parse($lastService->service_date)->addMonth()->format('Y-m-d') : null;
+        }
 
         return view('pages.vehicles.index', compact('vehicles'));
     }

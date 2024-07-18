@@ -3,6 +3,7 @@
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\FuelConsumptionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\VechicleController;
 use Illuminate\Support\Facades\Route;
 
@@ -13,14 +14,11 @@ Route::get('/', function () {
 Route::resource('drivers', DriverController::class);
 Route::resource('vehicles', VechicleController::class);
 Route::resource('fuel-consumptions', FuelConsumptionController::class);
+Route::resource('services', ServiceController::class);
 
 Route::get('/bookings', function () {
     return view('pages.bookings.index');
 })->name('booking.index');
-
-Route::get('/services', function () {
-    return view('pages.services.index');
-})->name('services.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
