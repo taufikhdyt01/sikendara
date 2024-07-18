@@ -9,10 +9,6 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\VechicleController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
