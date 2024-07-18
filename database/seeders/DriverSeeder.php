@@ -16,7 +16,7 @@ class DriverSeeder extends Seeder
         DB::table('drivers')->insert([
             [
                 'name' => 'Joko Susilo',
-                'status' => 'available',
+                'status' => 'assigned',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -28,7 +28,7 @@ class DriverSeeder extends Seeder
             ],
             [
                 'name' => 'Agus Salim',
-                'status' => 'available',
+                'status' => 'assigned',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -40,7 +40,7 @@ class DriverSeeder extends Seeder
             ],
             [
                 'name' => 'Budi Santoso',
-                'status' => 'assigned',
+                'status' => 'available',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

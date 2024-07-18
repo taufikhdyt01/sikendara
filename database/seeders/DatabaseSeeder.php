@@ -19,6 +19,10 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             VehicleSeeder::class,
             DriverSeeder::class,
+            BookingSeeder::class,
+            ApprovalSeeder::class,
+            FuelConsumptionSeeder::class,
+            ServiceSeeder::class
         ]);
     }
 }
