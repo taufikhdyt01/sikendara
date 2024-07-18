@@ -18,24 +18,27 @@ class VechicleController extends Controller
 
         if ($search) {
             $vehicles = Vehicle::where(function ($query) use ($search) {
-                                $query->where('brand', 'like', '%' . $search . '%')
-                                      ->orWhere('model', 'like', '%' . $search . '%')
-                                      ->orWhere(function ($query) use ($search) {
-                                          $keywords = explode(' ', $search);
-                                          foreach ($keywords as $keyword) {
-                                              $query->where('brand', 'like', '%' . $keyword . '%')
-                                                    ->orWhere('model', 'like', '%' . $keyword . '%');
-                                          }
-                                      });
-                            })
-                            ->get();
+                $query
+                    ->where('brand', 'like', '%' . $search . '%')
+                    ->orWhere('model', 'like', '%' . $search . '%')
+                    ->orWhere(function ($query) use ($search) {
+                        $keywords = explode(' ', $search);
+                        foreach ($keywords as $keyword) {
+                            $query->where('brand', 'like', '%' . $keyword . '%')->orWhere('model', 'like', '%' . $keyword . '%');
+                        }
+                    });
+            })->get();
         } else {
             $vehicles = Vehicle::all();
         }
-        
+
         foreach ($vehicles as $vehicle) {
             $lastService = $vehicle->services()->orderBy('service_date', 'desc')->first();
-            $vehicle->nextServiceDate = $lastService ? Carbon::parse($lastService->service_date)->addMonth()->format('Y-m-d') : null;
+            $vehicle->nextServiceDate = $lastService
+                ? Carbon::parse($lastService->service_date)
+                    ->addMonth()
+                    ->format('Y-m-d')
+                : null;
             $vehicle->approvedBookings = $vehicle->bookings()->where('status', 'approved')->get();
         }
 

@@ -1,4 +1,5 @@
 //import './bootstrap';
+import "./chart";
 import.meta.glob(["../images/**/*.svg"]);
 
 if (

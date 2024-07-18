@@ -80,20 +80,25 @@
                         </li>
                     @endforeach
                 </ul>
-                @auth
-                    @if (auth()->user()->canApprove($booking))
-                        <div class="mt-4">
-                            <p class="text-sm font-medium text-gray-900 dark:text-white">Pengajuan ini memerlukan
-                                persetujuan Anda.</p>
-                            <div class="mt-2 space-x-4">
-                                <button type="button"
+                @if (auth()->user()->canApprove($booking))
+                    <div class="mt-4">
+                        <p class="text-sm font-medium text-gray-900 dark:text-white">Pengajuan ini memerlukan
+                            persetujuan Anda.</p>
+                        <div class="mt-2 space-x-4">
+                            <form action="{{ route('bookings.approve', $booking) }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit"
                                     class="text-white bg-green-500 hover:bg-green-600 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Setujui</button>
-                                <button type="button"
+                            </form>
+                            <form action="{{ route('bookings.reject', $booking) }}" method="POST" class="inline">
+                                @csrf
+                                <button type="submit"
                                     class="text-white bg-red-500 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Tolak</button>
-                            </div>
+                            </form>
                         </div>
-                    @endif
-                @endauth
+                    </div>
+                @endif
+
             </div>
         </div>
     </div>

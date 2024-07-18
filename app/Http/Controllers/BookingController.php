@@ -65,7 +65,7 @@ class BookingController extends Controller
             $approvers = $request->approvers;
             $level = 1;
             foreach ($approvers as $approverId) {
-                $status = ($level == 1) ? 'process' : 'pending';
+                $status = $level == 1 ? 'process' : 'pending';
                 Approval::create([
                     'booking_id' => $booking->id,
                     'user_id' => $approverId,
@@ -109,5 +109,53 @@ class BookingController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function approve(Request $request, Booking $booking)
+    {
+        if (!auth()->user()->canApprove($booking)) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $approval = $booking->approvals()->where('user_id', auth()->id())->first();
+
+        $approval->update(['status' => 'approved']);
+
+        $higherApprovals = Approval::where('booking_id', $booking->id)
+            ->where('level', '>', $approval->level)
+            ->get();
+
+        foreach ($higherApprovals as $higherApproval) {
+            if ($higherApproval->level == $approval->level + 1) {
+                $higherApproval->update(['status' => 'process']);
+            }
+        }
+
+        if ($higherApprovals->isEmpty()) {
+            $booking->update(['status' => 'approved']);
+
+            $driver = Driver::findOrFail($booking->driver_id);
+            $driver->update(['status' => 'assigned']);
+    
+            $vehicle = Vehicle::findOrFail($booking->vehicle_id);
+            $vehicle->update(['status' => 'in use']);
+        }
+
+        return redirect()->back()->with('success', 'Booking telah disetujui.');
+    }
+
+    public function reject(Request $request, Booking $booking)
+    {
+        if (!auth()->user()->canApprove($booking)) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $approval = $booking->approvals()->where('user_id', auth()->id())->first();
+
+        $approval->update(['status' => 'rejected']);
+
+        $booking->update(['status' => 'rejected']);
+
+        return redirect()->back()->with('success', 'Booking telah ditolak.');
     }
 }
