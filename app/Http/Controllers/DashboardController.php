@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Vehicle;
 use App\Models\Booking;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -13,8 +14,10 @@ class DashboardController extends Controller
     {
         $monthlyUsage = $this->getMonthlyUsage();
         $totalUsage = Booking::where('status', 'approved')->count();
+        $user = Auth::user();
+        $notifications = $user->notifications()->get();
 
-        return view('pages.dashboard', compact('monthlyUsage', 'totalUsage'));
+        return view('pages.dashboard', compact('monthlyUsage', 'totalUsage', 'notifications'));
     }
 
     private function getMonthlyUsage()

@@ -8,8 +8,10 @@ use App\Models\Approval;
 use App\Models\Booking;
 use App\Models\Driver;
 use App\Models\Mine;
+use App\Models\Notification;
 use App\Models\User;
 use App\Models\Vehicle;
+use App\Services\LogService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
@@ -69,8 +71,15 @@ class BookingController extends Controller
                     'level' => $level,
                     'status' => $status,
                 ]);
+
+                if ($level == 1) {
+                    $this->sendNotification($approverId, "Pengajuan Pemesanan No. {$booking->id} Kendaraan {$booking->vehicle->brand} {$booking->vehicle->model} ({$booking->vehicle->number_plate}) memerlukan persetujuan");
+                }
+
                 $level++;
             }
+
+            LogService::record("Menambahkan pengajuan pemesanan no. {$booking->id} kendaraan {$booking->vehicle->brand} {$booking->vehicle->model} ({$booking->vehicle->number_plate})");
         });
 
         return redirect()->route('bookings.index')->with('success', 'Booking berhasil disimpan.');
@@ -85,6 +94,7 @@ class BookingController extends Controller
         $approval = $booking->approvals()->where('user_id', auth()->id())->first();
 
         $approval->update(['status' => 'approved']);
+        LogService::record("Menyetujui pengajuan pemesanan no. {$booking->id} kendaraan {$booking->vehicle->brand} {$booking->vehicle->model} ({$booking->vehicle->number_plate})");
 
         $higherApprovals = Approval::where('booking_id', $booking->id)
             ->where('level', '>', $approval->level)
@@ -93,6 +103,7 @@ class BookingController extends Controller
         foreach ($higherApprovals as $higherApproval) {
             if ($higherApproval->level == $approval->level + 1) {
                 $higherApproval->update(['status' => 'process']);
+                $this->sendNotification($higherApproval->user_id, "Pengajuan Pemesanan No. {$booking->id} Kendaraan {$booking->vehicle->brand} {$booking->vehicle->model} ({$booking->vehicle->number_plate}) memerlukan persetujuan");
             }
         }
 
@@ -176,5 +187,13 @@ class BookingController extends Controller
         return response()
             ->download(storage_path('exports/' . $filename))
             ->deleteFileAfterSend();
+    }
+
+    public function sendNotification($userId, $message)
+    {
+        $notification = new Notification();
+        $notification->user_id = $userId;
+        $notification->message = $message;
+        $notification->save();
     }
 }

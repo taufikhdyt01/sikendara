@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\VehicleRequest;
 use App\Models\Vehicle;
+use App\Services\LogService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 
@@ -50,7 +51,7 @@ class VehicleController extends Controller
      */
     public function store(VehicleRequest $request)
     {
-        Vehicle::create([
+        $vehicle = Vehicle::create([
             'brand' => $request->brand,
             'model' => $request->model,
             'number_plate' => $request->number_plate,
@@ -58,6 +59,8 @@ class VehicleController extends Controller
             'owned_by' => $request->owned_by,
             'status' => 'available',
         ]);
+
+        LogService::record("Menambahkan kendaraan baru {$vehicle->brand} {$vehicle->model} ({$vehicle->number_plate})");
 
         return redirect()->route('vehicles.index')->with('success', 'Kendaraan berhasil ditambahkan.');
     }

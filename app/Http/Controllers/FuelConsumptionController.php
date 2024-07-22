@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FuelConsumptionRequest;
 use App\Models\FuelConsumption;
 use App\Models\Vehicle;
+use App\Services\LogService;
 use Illuminate\Http\Request;
 
 class FuelConsumptionController extends Controller
@@ -37,7 +38,9 @@ class FuelConsumptionController extends Controller
      */
     public function store(FuelConsumptionRequest $request)
     {
-        FuelConsumption::create($request->validated());
+        $fuelConsumption = FuelConsumption::create($request->validated());
+
+        LogService::record("Menambahkan laporan konsumsi BBM kendaraan {$fuelConsumption->vehicle->brand} {$fuelConsumption->vehicle->model} ({$fuelConsumption->vehicle->number_plate})");
 
         return redirect()->route('fuel-consumptions.index')->with('success', 'Laporan konsumsi BBM berhasil ditambahkan.');
     }

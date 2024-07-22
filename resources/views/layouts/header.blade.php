@@ -14,9 +14,9 @@
                 <!-- Search mobile -->
                 <x-header.mobile-search />
                 <!-- Notifications -->
-                {{-- <x-header.notification-button /> --}}
+                <x-header.notification-button />
                 <!-- Dropdown menu -->
-                {{-- <x-header.notification-drop-down /> --}}
+                <x-header.notification-drop-down />
 
                 <x-header.dark-white-mode-toggler />
 

@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('fuel_consumptions', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vehicle_id')->constrained();
-            $table->string('fuel_type');
-            $table->date('date');
-            $table->float('liters');
+            $table->foreignId('user_id')->constrained();
+            $table->text('message');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('fuel_consumptions');
+        Schema::dropIfExists('notifications');
     }
 };

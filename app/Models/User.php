@@ -61,6 +61,11 @@ class User extends Authenticatable
         return $this->hasMany(Log::class);
     }
 
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
+
     public function canApprove($booking)
     {
         $approval = $this->approvals()->where('booking_id', $booking->id)->first();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Driver;
+use App\Services\LogService;
 use Illuminate\Http\Request;
 
 class DriverController extends Controller
@@ -32,10 +33,12 @@ class DriverController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        Driver::create([
+        $driver = Driver::create([
             'name' => $request->name,
             'status' => 'available',
         ]);
+
+        LogService::record("Menambahkan driver baru {$driver->name}");
 
         return redirect()->route('drivers.index')->with('success', 'Driver berhasil ditambahkan.');
     }

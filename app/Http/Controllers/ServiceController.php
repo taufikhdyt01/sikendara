@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ServiceRequest;
 use App\Models\Service;
 use App\Models\Vehicle;
+use App\Services\LogService;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -37,8 +38,10 @@ class ServiceController extends Controller
      */
     public function store(ServiceRequest $request)
     {
-        Service::create($request->validated());
+        $service = Service::create($request->validated());
 
-        return redirect()->route('services.index')->with('success', 'Layanan berhasil ditambahkan.');
+        LogService::record("Menambahkan laporan service {$service->vehicle->brand} {$service->vehicle->model} ({$service->vehicle->number_plate})");
+
+        return redirect()->route('services.index')->with('success', 'Laporan service berhasil ditambahkan.');
     }
 }

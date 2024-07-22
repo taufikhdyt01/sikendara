@@ -84,6 +84,10 @@ Lists service reports for all vehicles.
 
 -   **Admin Role**: Can add service reports.
 
+### 7. Log History
+
+Displays a record of all system activities and changes.
+
 ## Activity Diagram
 
 ![activity_diagram](https://github.com/taufikhdyt01/sikendara/blob/main/public/activity_diagram.png?raw=true)

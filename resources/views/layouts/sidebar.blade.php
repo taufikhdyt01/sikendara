@@ -57,6 +57,15 @@
                                 class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
                         </x-sidebar.item>
                     </li>
+
+                    {{-- Riwayat Log --}}
+                    <li>
+                        <x-sidebar.item path="{{ route('logs.index') }}" content="Riwayat Log">
+                            <x-s-v-g-s.logs
+                                class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
+                        </x-sidebar.item>
+                    </li>
+
                 </ul>
             </div>
         </div>
