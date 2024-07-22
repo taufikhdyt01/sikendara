@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Office;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -19,7 +20,10 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('pages.auth.register');
+        $offices = Office::all();
+
+        // Pass the offices to the view
+        return view('pages.auth.register', compact('offices'));
     }
 
     /**
@@ -31,14 +35,20 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'position' => ['required', 'string', 'max:255'],
+            'role' => ['required', 'in:admin,approver'],
+            'office_id' => ['required', 'exists:offices,id'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'position' => $request->position,
+            'role' => $request->role,
+            'office_id' => $request->office_id,
         ]);
 
         event(new Registered($user));

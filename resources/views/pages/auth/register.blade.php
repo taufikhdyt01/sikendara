@@ -1,11 +1,11 @@
 <x-guest-layout>
     @section('content')
-        <div class="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0 dark:bg-gray-900">
+        <div class="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen dark:bg-gray-900">
             <a href="#" class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
                 <span>Sikendara PT Nickel Mining</span>
             </a>
-            <!-- Card -->
-            <div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
+            <!-- Scrollable Card -->
+            <div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800 overflow-auto">
                 <h2 class="text-2xl font-bold text-gray-900 dark:text-white">
                     Create a Free Account
                 </h2>
@@ -28,6 +28,40 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                             placeholder="name@company.com" required autocomplete="username">
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                    </div>
+                    <!-- Position -->
+                    <div>
+                        <label for="position"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Position</label>
+                        <input type="text" name="position" id="position"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            placeholder="e.g., Manager" required>
+                        <x-input-error :messages="$errors->get('position')" class="mt-2" />
+                    </div>
+                    <!-- Role -->
+                    <div>
+                        <label for="role"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
+                        <select name="role" id="role"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            required>
+                            <option value="admin">Admin</option>
+                            <option value="approver">Approver</option>
+                        </select>
+                        <x-input-error :messages="$errors->get('role')" class="mt-2" />
+                    </div>
+                    <!-- Office -->
+                    <div>
+                        <label for="office_id"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Office</label>
+                        <select name="office_id" id="office_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                            required>
+                            @foreach ($offices as $office)
+                                <option value="{{ $office->id }}">{{ $office->name }}</option>
+                            @endforeach
+                        </select>
+                        <x-input-error :messages="$errors->get('office_id')" class="mt-2" />
                     </div>
                     <!-- Password -->
                     <div>
